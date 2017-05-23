@@ -15,11 +15,19 @@ class FizzBuzzTestCase(unittest.TestCase):
 
     def test_classic_fizzbuzz(self):
         rv = self.app.get('/fizzbuzz/')
+        self.assertEqual(rv.status, '200 OK')
         fizzbuzz = json.loads(rv.data)
         self.assertEqual(len(fizzbuzz), 100)
         self.assertEqual(fizzbuzz[2], "fizz")
         self.assertEqual(fizzbuzz[4], "buzz")
         self.assertEqual(fizzbuzz[14], "fizzbuzz")
+
+    def test_fizzbuzz_with_parameters(self):
+        rv = self.app.get('/fizzbuzz/?string1=bon')
+        self.assertEqual(rv.status, '200 OK')
+        fizzbuzz = json.loads(rv.data)
+        self.assertEqual(len(fizzbuzz), 100)
+        self.assertEqual(fizzbuzz[2], "bon")
 
 if __name__ == '__main__':
     unittest.main()
